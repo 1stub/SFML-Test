@@ -8,7 +8,7 @@ int main() {
 	Game game;
 
 	//Game loop
-	while (game.running()) {
+	while (game.running() && !game.getEndGame()) {
 		//Event polling
 
 		//Update
