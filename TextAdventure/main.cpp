@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Game.h"
+#include "Menu.h"
 
 int main() {
 
@@ -8,15 +9,16 @@ int main() {
 	Game game;
 
 	//Game loop
-	while (game.running() && !game.getEndGame()) {
-		//Event polling
+	if (game.showMenu() == true)
+	{
+		while (game.running() && !game.getEndGame()) {
+			//Update
+			game.update();
 
-		//Update
-		game.update();
+			//Render
+			game.render();
 
-		//Render
-		game.render();
-
+		}
 	}
 	//End of application
 	return 0;

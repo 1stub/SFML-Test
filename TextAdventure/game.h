@@ -57,6 +57,7 @@ private:
 	void initEnemies();
 
 public: 
+	bool showMenu();
 	//Constructors / Destructors
 	Game();
 	virtual ~Game();
