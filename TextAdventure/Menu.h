@@ -14,10 +14,13 @@ public:
 	void MoveDown();
 	int GetPressedItem() { return selectedItemIndex; }
 
-private: 
+
+private:
+	float width;
+	float height;
 	int selectedItemIndex;
 	sf::Font font;
 	sf::Text menu[MAX_NUMBER_OF_ITEMS];
-
+	sf::Text title;
 };
 

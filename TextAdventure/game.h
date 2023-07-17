@@ -41,8 +41,9 @@ private:
 	sf::RectangleShape enemy;
 
 	//Game logic
+	float startingMovement;
 	bool endGame;
-	unsigned points;
+	int points;
 	int health;
 	float enemySpawnTimer;
 	float enemySpawnTimerMax;

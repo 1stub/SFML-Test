@@ -202,7 +202,8 @@ void Game::updateEnemies()
 	//Moving and updating the enemies
 	for (int i = 0; i < this->enemies.size(); i++)
 	{
-		this->enemies[i].move(0.f, 5.f);
+		startingMovement = 2;
+		this->enemies[i].move(0.f, startingMovement);
 
 		if (this->enemies[i].getPosition().y > this->window->getSize().y)
 		{
@@ -225,7 +226,13 @@ void Game::updateEnemies()
 				{
 					deleted = true;
 					this->enemies.erase(this->enemies.begin() + i);
-					this->points += 1.f;
+					this->points += 1;
+
+					//TODO: Increase enemy speed as points increase
+					if (points % 20 == 0)
+					{
+						startingMovement += 1;
+					}
 					std::cout << "Points: " << this->points << std::endl;
 				}
 			}

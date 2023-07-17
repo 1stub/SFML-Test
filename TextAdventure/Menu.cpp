@@ -30,6 +30,15 @@ Menu::~Menu()
 
 void Menu::drawMenu(sf::RenderWindow& window)
 {
+	width = window.getSize().x;
+	height = window.getSize().y;
+	title.setFont(font);
+	title.setStyle(sf::Text::Bold);
+	title.setCharacterSize(40);
+	title.setFillColor(sf::Color::Blue);
+	title.setPosition(sf::Vector2f(width / 4, height / 16));
+	title.setString("Click the Squares!");
+	window.draw(title);
 	for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++) {
 		window.draw(menu[i]);
 	}
