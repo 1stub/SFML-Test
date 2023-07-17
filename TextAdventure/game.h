@@ -4,6 +4,8 @@
 #include <vector>
 #include <ctime>
 #include <sstream>
+#include <thread>
+#include <chrono>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -41,7 +43,8 @@ private:
 	sf::RectangleShape enemy;
 
 	//Game logic
-	float startingMovement;
+	std::chrono::time_point<std::chrono::steady_clock> previous_time = std::chrono::steady_clock::now();
+	float startingMovement = 2.f;
 	bool endGame;
 	int points;
 	int health;

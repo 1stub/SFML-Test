@@ -140,22 +140,36 @@ void Game::spawnEnemy()
 		static_cast<float>(rand() % static_cast<int>(this->window->getSize().x - this->enemy.getSize().x)),
 		0.f
 		);
-	int x = rand() % 3;
-	if (x == 1)
+
+	//Randomize enemy type
+	int type = rand() % 5;
+
+	switch (type)
 	{
+	case 0:
+		this->enemy.setSize(sf::Vector2f(20.f, 20.f));
+		this->enemy.setFillColor(sf::Color::Magenta);
+		break;
+	case 1:
 		this->enemy.setSize(sf::Vector2f(25.f, 25.f));
 		this->enemy.setFillColor(sf::Color::Red);
-	}
-	else if (x == 2)
-	{
-		this->enemy.setSize(sf::Vector2f(75.f, 75.f));
-		this->enemy.setFillColor(sf::Color::Blue);
-	}
-	else
-	{
+		break;
+	case 2:
+		this->enemy.setSize(sf::Vector2f(40.f, 40.f));
+		this->enemy.setFillColor(sf::Color::Yellow);
+		break;
+	case 3:
 		this->enemy.setSize(sf::Vector2f(50.f, 50.f));
+		this->enemy.setFillColor(sf::Color::Blue);
+		break;
+	case 4:
+		this->enemy.setSize(sf::Vector2f(75.f, 75.f));
 		this->enemy.setFillColor(sf::Color::Green);
+		break;
+	default:
+		break;
 	}
+
 	//Spawn Enemies
 	if (this->enemies.size() <= maxEnemies)
 	{
@@ -202,7 +216,12 @@ void Game::updateEnemies()
 	//Moving and updating the enemies
 	for (int i = 0; i < this->enemies.size(); i++)
 	{
-		startingMovement = 2;
+		auto current_time = std::chrono::steady_clock::now();
+		if ((std::chrono::duration_cast<std::chrono::seconds>(current_time - previous_time).count() >= 1)) {
+			this->previous_time = current_time;
+			this->startingMovement += 0.1;
+		}
+		std::cout << this->startingMovement << std::endl;
 		this->enemies[i].move(0.f, startingMovement);
 
 		if (this->enemies[i].getPosition().y > this->window->getSize().y)
@@ -224,15 +243,26 @@ void Game::updateEnemies()
 			{
 				if (this->enemies[i].getGlobalBounds().contains(this->mousePosView))
 				{
+					if (this->enemies[i].getFillColor() == sf::Color::Magenta) {
+						this->points += 10;
+					}
+					else if (this->enemies[i].getFillColor() == sf::Color::Red) {
+						this->points += 5;
+					}
+					else if (this->enemies[i].getFillColor() == sf::Color::Yellow) {
+						this->points += 4;
+					}
+					else if (this->enemies[i].getFillColor() == sf::Color::Blue) {
+						this->points += 2;
+					}
+					else if (this->enemies[i].getFillColor() == sf::Color::Green) {
+						this->points += 1;
+					}
+
 					deleted = true;
 					this->enemies.erase(this->enemies.begin() + i);
-					this->points += 1;
 
 					//TODO: Increase enemy speed as points increase
-					if (points % 20 == 0)
-					{
-						startingMovement += 1;
-					}
 					std::cout << "Points: " << this->points << std::endl;
 				}
 			}
